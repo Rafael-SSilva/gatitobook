@@ -8,15 +8,16 @@ import { Animais } from './animais';
 const APi = environment.apiURL;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AnimaisService {
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  constructor(private http: HttpClient, private tokenService : TokenService) { }
-
-  listaDoUsuario(nomeDoUsuario: string) : Observable<Animais>{
+  listaDoUsuario(nomeDoUsuario: string): Observable<Animais> {
     const token = this.tokenService.retornaToken();
     const headers = new HttpHeaders().append('x-access-token', token);
-    return this.http.get<Animais>(`${APi}/${nomeDoUsuario}/fotos`, {headers});
+    return this.http.get<Animais>(`${APi}/${nomeDoUsuario}/photos`, {
+      headers,
+    });
   }
 }
